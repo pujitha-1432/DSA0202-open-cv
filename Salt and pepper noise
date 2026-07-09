@@ -1,0 +1,42 @@
+import numpy as np
+import cv2
+import matplotlib.pyplot as plt
+
+def add_salt_and_pepper_noise(image, salt_vs_pepper, amount):
+    """
+    Adds salt and pepper noise to an image.
+
+    Args:
+        image (numpy.ndarray): The input image.
+        salt_vs_pepper (float): The ratio of salt to pepper noise (0 to 1). 
+                                 0.5 means equal amounts of salt and pepper.
+        amount (float): The amount of noise to add (0 to 1).
+
+    Returns:
+        numpy.ndarray: The image with salt and pepper noise.
+    """
+    noisy_image = np.copy(image)
+    
+    # Generate random numbers for noise
+    num_pixels = image.shape[0] * image.shape[1]
+    
+    # Add salt noise
+    num_salt = np.ceil(amount * num_pixels * salt_vs_pepper)
+    coords = [np.random.randint(0, i - 1, int(num_salt)) for i in image.shape[:2]]
+    noisy_image[coords[0], coords[1]] = 255
+    
+    # Add pepper noise
+    num_pepper = np.ceil(amount * num_pixels * (1 - salt_vs_pepper))
+    coords = [np.random.randint(0, i - 1, int(num_pepper)) for i in image.shape[:2]]
+    noisy_image[coords[0], coords[1]] = 0
+    
+    return noisy_image
+
+# Apply salt and pepper noise to the original image (img_rgb)
+salt_pepper_noisy_image = add_salt_and_pepper_noise(img_rgb, salt_vs_pepper=0.5, amount=0.04)
+
+# Display the image with salt and pepper noise
+plt.imshow(salt_pepper_noisy_image)
+plt.axis('off')
+plt.title('Image with Salt and Pepper Noise')
+plt.show()
