@@ -1,0 +1,9 @@
+import numpy as np
+
+# Apply contrast stretching to the grayscale image
+# You can choose min and max values for the output range, e.g., 0 to 255
+contrast_stretched_img_cv = cv2.normalize(grayscale_img_cv, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8U)
+
+# Display the contrast stretched image using cv2_imshow
+print('Contrast Stretched Image using OpenCV:')
+cv2_imshow(contrast_stretched_img_cv)
