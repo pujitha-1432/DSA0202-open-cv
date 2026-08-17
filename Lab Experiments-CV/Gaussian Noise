@@ -1,0 +1,24 @@
+import numpy as np
+import cv2
+import matplotlib.pyplot as plt # Ensure matplotlib is imported for display
+
+# Add Gaussian noise to the image
+# Determine the mean and standard deviation for the noise
+mean = 0
+std_dev = 25 # You can adjust this value to control the intensity of the noise
+
+# Create a noisy array with the same shape as the image
+noisy_image = img_rgb.copy() # Make a copy to avoid modifying the original img_rgb
+
+# Generate Gaussian noise
+noise = np.random.normal(mean, std_dev, noisy_image.shape).astype('uint8')
+
+# Add the noise to the image
+# Ensure that the addition does not go out of the valid pixel range (0-255)
+noisy_image = cv2.add(noisy_image, noise)
+
+# Display the noisy image
+plt.imshow(noisy_image)
+plt.axis('off')
+plt.title('Image with Gaussian Noise')
+plt.show()
