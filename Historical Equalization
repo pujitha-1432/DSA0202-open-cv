@@ -1,6 +1,0 @@
-# Apply histogram equalization to the grayscale image
-equalized_img_cv = cv2.equalizeHist(grayscale_img_cv)
-
-# Display the histogram equalized image using cv2_imshow
-print('Histogram Equalized Image using OpenCV:')
-cv2_imshow(equalized_img_cv)
