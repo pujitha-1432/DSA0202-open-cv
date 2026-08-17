@@ -1,0 +1,30 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Add Poisson noise to the original image (img_rgb)
+# Poisson noise is typically added to images where pixel values are counts.
+# For standard images, we often scale the pixel values before applying Poisson noise
+# and then scale them back.
+
+# Convert image to float and normalize to 0-1 range for better noise application
+image_float = img_rgb.astype(np.float32) / 255.0
+
+# A lambda parameter is needed for Poisson distribution. 
+# Higher lambda means less visible noise. We can use the image intensity itself
+# scaled to a certain level.
+lam = 10.0 # Adjust this value to control the intensity of the Poisson noise
+
+# Apply Poisson noise
+poisson_noise = np.random.poisson(image_float * lam) / lam
+
+# Clip the values to ensure they are within valid image range [0, 1]
+poisson_noise = np.clip(poisson_noise, 0, 1)
+
+# Convert back to 0-255 range and uint8 type
+poisson_noisy_image = (poisson_noise * 255).astype(np.uint8)
+
+# Display the image with Poisson noise
+plt.imshow(poisson_noisy_image)
+plt.axis('off')
+plt.title('Image with Poisson Noise')
+plt.show()
