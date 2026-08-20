@@ -1,0 +1,34 @@
+import cv2
+import numpy as np
+from google.colab.patches import cv2_imshow
+
+# Read the image
+img_path = '/content/Cups juice.jpeg'
+img = cv2.imread(img_path)
+h, w = img.shape[:2]
+
+# Define 4 source points (e.g., top-left, top-right, bottom-right, bottom-left)
+pts1 = np.float32([
+    [50, 50],
+    [w - 50, 30],
+    [w - 20, h - 50],
+    [30, h - 20]
+])
+
+# Define 4 destination points to create a perspective effect
+pts2 = np.float32([
+    [0, 0],
+    [w, 0],
+    [w, h],
+    [0, h]
+])
+
+# Compute the 3x3 Perspective Transformation matrix
+M = cv2.getPerspectiveTransform(pts1, pts2)
+
+# Apply the transformation
+perspective_img = cv2.warpPerspective(img, M, (w, h))
+
+# Display the result
+print("Perspective Transformed Image:")
+cv2_imshow(perspective_img)
